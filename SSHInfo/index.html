@@ -1,0 +1,244 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* CSS stilleri buraya ekleyin */
+        .circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid black;
+            margin: 0 3px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .green {
+            background-color: green;
+        }
+
+        .red {
+            background-color: red;
+        }
+    </style>
+    <title>SSH Dashboard</title>
+</head>
+<body>
+    <h1>SSH Dashboard</h1>
+
+    <!-- Sanal Makineler Listesi -->
+    <select id="virtualMachineSelect" onchange="showVirtualMachineInfo()">
+        <option value="" disabled selected>Select a Virtual Machine</option>
+        <!-- Sanal makineler burada dinamik olarak listelenecek -->
+    </select>
+
+    <!-- Sanal Makine Detayları -->
+    <div id="virtualMachineInfo" style="display: none">
+        <h2>Virtual Machine Information</h2>
+        <div id="virtualMachineName"></div>
+        <div id="statusRectangle" class="circle status" style="margin-top: 10px;"></div>
+        <button onclick="toggleVirtualMachineStatus()">Toggle Virtual Machine Status</button>
+    </div>
+
+    <!-- Docker Durumu -->
+    <div id="dockerStatusInfo">
+        <h2>Docker Status</h2>
+        <div id="dockerStatusCircle" class="circle status" style="margin-top: 20px;"></div>
+        <button onclick="DockerStatus()">Check Docker Status</button>
+    </div>
+
+    <!-- Bellek Kullanımı -->
+    <div id="memoryInfo">
+        <h2>Memory Usage</h2>
+        <div id="usedMemory"></div>
+        <div id="totalMemory"></div>
+        <div id="usagePercentage"></div>
+        <div id="memoryStatusCircle" class="circle status" style="margin-top: 20px;"></div>
+        <button onclick="getMemoryUsage()">Check Memory Usage</button>
+    </div>
+
+    <!-- Loading Mesajı -->
+    <div id="loadingMessage">Loading...</div>
+
+    <script>
+        function showVirtualMachineInfo() {
+            var select = document.getElementById("virtualMachineSelect");
+            var selectedVirtualMachine = select.options[select.selectedIndex].value;
+
+            document.getElementById("loadingMessage").innerText = "Fetching data...";
+            document.getElementById("loadingMessage").style.display = "block";
+
+            // AJAX request to check virtual machine status
+            fetch(`http://localhost:5134/api/SSHWebAPI/${selectedVirtualMachine}`, {
+                method: 'GET',
+                mode: 'cors',
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    const jsonData = JSON.parse(data);
+
+                    document.getElementById("virtualMachineInfo").style.display = "block";
+                    var statusRectangleElement = document.getElementById("statusRectangle");
+                    statusRectangleElement.style.backgroundColor = jsonData.isRunning ? "green" : "red";
+
+                    var virtualMachineNameElement = document.getElementById("virtualMachineName");
+                    virtualMachineNameElement.innerText = "Selected Virtual Machine: " + selectedVirtualMachine;
+                    document.getElementById("loadingMessage").style.display = "none";
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById("loadingMessage").style.display = "none";
+                });
+        }
+
+        function toggleVirtualMachineStatus() {
+            var select = document.getElementById("virtualMachineSelect");
+            var selectedVirtualMachine = select.options[select.selectedIndex].value;
+
+            document.getElementById("loadingMessage").innerText = "Processing...";
+            document.getElementById("loadingMessage").style.display = "block";
+
+            // AJAX request to toggle virtual machine status
+            fetch(`http://localhost:5134/api/SSHWebAPI/${selectedVirtualMachine}/toggle`, {
+                method: 'POST',
+                mode: 'cors',
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    const jsonData = JSON.parse(data);
+
+                    var statusRectangleElement = document.getElementById("statusRectangle");
+                    if (jsonData.isRunning) {
+                        statusRectangleElement.classList.remove("red");
+                        statusRectangleElement.classList.add("green");
+                    } else {
+                        statusRectangleElement.classList.remove("green");
+                        statusRectangleElement.classList.add("red");
+                    }
+
+                    document.getElementById("loadingMessage").innerText = `${jsonData.message}`;
+                    document.getElementById("loadingMessage").style.display = "block";
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById("loadingMessage").style.display = "none";
+                });
+        }
+
+        function DockerStatus() {
+            var select = document.getElementById("virtualMachineSelect");
+            var selectedVirtualMachine = select.options[select.selectedIndex].value;
+
+            document.getElementById("loadingMessage").innerText = "Fetching data...";
+            document.getElementById("loadingMessage").style.display = "block";
+
+            // AJAX request to check Docker status
+            fetch(`http://localhost:5134/api/SSHWebAPI/docker/${selectedVirtualMachine}`, {
+                method: 'GET',
+                mode: 'cors',
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+
+                    var dockerStatusCircleElement = document.getElementById("dockerStatusCircle");
+
+                    if (data.message && data.message.includes("installed")) {
+                        dockerStatusCircleElement.style.backgroundColor = "green";
+                    } else {
+                        dockerStatusCircleElement.style.backgroundColor = "red";
+                    }
+
+                    document.getElementById("loadingMessage").innerText = "";
+                    document.getElementById("loadingMessage").style.display = "none";
+
+                    document.getElementById("dockerStatusInfo").style.display = "block";
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById("loadingMessage").innerText = "An error occurred. Docker status could not be retrieved.";
+                    document.getElementById("loadingMessage").style.display = "block";
+
+                    document.getElementById("dockerStatusInfo").style.display = "none";
+                });
+        }
+
+        function getMemoryUsage() {
+            var select = document.getElementById("virtualMachineSelect");
+            var selectedVirtualMachine = select.options[select.selectedIndex].value;
+
+            document.getElementById("loadingMessage").innerText = "Fetching data...";
+            document.getElementById("loadingMessage").style.display = "block";
+
+            // AJAX request to check memory usage
+            fetch(`http://localhost:5134/api/SSHWebAPI/memory/${selectedVirtualMachine}`, {
+                method: 'GET',
+                mode: 'cors',
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+
+                    var usedMemoryElement = document.getElementById("usedMemory");
+                    usedMemoryElement.innerText = "Used Memory: " + data.usedMemory + " MB";
+
+                    var totalMemoryElement = document.getElementById("totalMemory");
+                    totalMemoryElement.innerText = "Total Memory: " + data.totalMemory + " MB";
+
+                    var usagePercentageElement = document.getElementById("usagePercentage");
+                    usagePercentageElement.innerText = "Usage Percentage: " + data.usagePercentage.toFixed(2) + "%";
+
+                    var memoryStatusCircleElement = document.getElementById("memoryStatusCircle");
+
+                    if (data.status === "Red") {
+                        memoryStatusCircleElement.style.backgroundColor = "red";
+                    } else {
+                        memoryStatusCircleElement.style.backgroundColor = "green";
+                    }
+
+                    document.getElementById("loadingMessage").innerText = "";
+                    document.getElementById("loadingMessage").style.display = "none";
+
+                    document.getElementById("memoryInfo").style.display = "block";
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById("loadingMessage").innerText = "An error occurred. Memory usage could not be retrieved.";
+                    document.getElementById("loadingMessage").style.display = "block";
+
+                    document.getElementById("memoryInfo").style.display = "none";
+                });
+        }
+    </script>
+
+</body>
+</html>

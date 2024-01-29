@@ -1,0 +1,72 @@
+﻿<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanal Makine Durumu</title>
+    <style>
+        #statusBox {
+            width: 200px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            border-radius: 5px;
+        }
+
+        .running {
+            background-color: green;
+        }
+
+        .stopped {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <label for="userId">ID:</label>
+        <input type="text" id="userId" name="userId">
+        <button onclick="CheckMachineStatus()">CheckStatus</button>
+    </div>
+    <div id="statusBox"></div>
+
+    <script>
+        async function CheckMachineStatus() {
+            try {
+                const userId = document.getElementById('userId').value;
+                const response = await fetch(`api/ssh/${userId}`);
+                const data = await response.json();
+
+                const statusBox = document.getElementById('statusBox');
+
+                if (response.ok) {
+                    statusBox.textContent = data;
+                    statusBox.classList.remove('stopped', 'running');
+
+                    if (data.toLowerCase().includes('kapalı')) {
+                        statusBox.classList.add('stopped');
+                    } else {
+                        statusBox.classList.add('running');
+                    }
+                } else {
+                    statusBox.textContent = `Hata: ${data}`;
+                    statusBox.classList.remove('stopped', 'running');
+                    console.error(`Hata: ${data}`);
+                }
+            } catch (error) {
+                console.error(error); // Hata durumunda konsola yazdır
+                const statusBox = document.getElementById('statusBox');
+                statusBox.textContent = 'Hata oluştu.';
+                statusBox.classList.remove('running');
+                statusBox.classList.add('stopped');
+            }
+        }
+    </script>
+</body>
+</html>

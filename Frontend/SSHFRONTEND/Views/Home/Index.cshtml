@@ -1,0 +1,358 @@
+﻿﻿@{
+
+    ViewData["Title"] = "SSH Virtual Machines";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Watcher</title>
+    
+    <link rel="stylesheet" href="~/corona-free-dark-bootstrap-admin-template-1.0.0/template/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/corona-free-dark-bootstrap-admin-template-1.0.0/template/assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="~/corona-free-dark-bootstrap-admin-template-1.0.0/template/assets/vendors/jvectormap/jquery-jvectormap.css">
+    <link rel="stylesheet" href="~/corona-free-dark-bootstrap-admin-template-1.0.0/template/assets/vendors/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="~/corona-free-dark-bootstrap-admin-template-1.0.0/template/assets/vendors/owl-carousel-2/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/corona-free-dark-bootstrap-admin-template-1.0.0/template/assets/vendors/owl-carousel-2/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/corona-free-dark-bootstrap-admin-template-1.0.0/template/assets/css/style.css">
+    <link rel="shortcut icon" href="~/corona-free-dark-bootstrap-admin-template-1.0.0/template/assets/images/favicon.png" />
+</head>
+<body>
+    <div class="container-scroller">
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+                <a class="sidebar-brand brand-logo" href="../../index.html"><img src="~/corona-free-dark-bootstrap-admin-template-1.0.0/template/assets/images/logo.svg" alt="logo" /></a>
+                <a class="sidebar-brand brand-logo-mini" href="../../index.html"><img src="~/corona-free-dark-bootstrap-admin-template-1.0.0/template/assets/images/logo-mini.svg" alt="logo" /></a>
+            </div>
+            <ul class="nav">
+                <li class="nav-item profile">
+                    <div class="profile-desc">
+                        <div class="profile-pic">
+                            <div class="count-indicator">
+                                <img class="img-xs rounded-circle " src="~/corona-free-dark-bootstrap-admin-template-1.0.0/template/assets/images/faces/face15.jpg" alt="">
+                                <span class="count bg-success"></span>
+                            </div>
+                            <div class="profile-name">
+                                <h5 class="mb-0 font-weight-normal">Henry Klein</h5>
+                                <span>Gold Member</span>
+                            </div>
+                        </div>
+                        <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
+                            <a href="#" class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-dark rounded-circle">
+                                        <i class="mdi mdi-settings text-primary"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-dark rounded-circle">
+                                        <i class="mdi mdi-onepassword  text-info"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <p class="preview-subject ellipsis mb-1 text-small">Change Password</p>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-dark rounded-circle">
+                                        <i class="mdi mdi-calendar-today text-success"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <p class="preview-subject ellipsis mb-1 text-small">To-do list</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item nav-category">
+                    <span class="nav-link">Navigation</span>
+                </li>
+                <li class="nav-item menu-items">
+                    <a class="nav-link" href="../../index.html">
+                        <span class="menu-icon">
+                            <i class="mdi mdi-speedometer"></i>
+                        </span>
+                        <span class="menu-title">Dashboard</span>
+                    </a>
+                </li>  
+            </ul>
+        </nav>
+        
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+           
+            <nav class="navbar p-0 fixed-top d-flex flex-row">
+                <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
+                    <a class="navbar-brand brand-logo-mini" href="../../index.html"><img src="~/corona-free-dark-bootstrap-admin-template-1.0.0/template/assets/images/logo-mini.svg" alt="logo" /></a>
+                </div>
+                
+            </nav>
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <div class="row">
+                        <div class="col-6 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <div class="d-flex align-items-center align-self-start">
+                                                <h3 class="mb-0">@ViewBag.v1</h3>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="icon icon-box-success ">
+                                                <span class="mdi mdi-tablet"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h6 class="text-muted font-weight-normal">Number of Virtual Machine</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <div class="d-flex align-items-center align-self-start">
+                                                <h3 class="mb-0">$17.34</h3>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="icon icon-box-success">
+                                                <span class="mdi mdi-account-check"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h6 class="text-muted font-weight-normal">Kullanıcı sayısı</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                  @*  @*  <h1>Sanal Makineler</h1> *@
+                     
+                    <select id="virtualMachineSelect" onchange="showVirtualMachineInfo()">
+                        <option value="" disabled selected>Sanal Makina Seçin</option>
+                        @foreach (var vm in ViewBag.VirtualMachines)
+                        {
+                            <option value="@vm">@vm</option>
+                        }
+                    </select>  
+
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuOutlineButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Sanal Makina Seç
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuOutlineButton2">
+                            <a class="dropdown-item" href="#" onclick="showVirtualMachineInfo('')">Sanal Makina Seçin</a>
+                            @foreach (var vm in ViewBag.VirtualMachines)
+                            {
+                                <a class="dropdown-item" href="#" onclick="showVirtualMachineInfo('@vm')">@vm</a>
+                            }
+                        </div>
+                    </div>
+
+
+
+                    <div id="virtualMachineInfo" style="display: none">
+                        <h2>Sanal Makina Bilgisi</h2>
+                        <div id="virtualMachineName"></div>
+                        <div id="statusRectangle" class="circle status" style="margin-top: 10px;"></div>
+                        <button onclick="toggleVirtualMachineStatus()">Sanal Makinanın Durumunu Değiştir</button>
+                    </div>
+                    <div id="dockerStatusInfo">
+                        <h2>Docker Durumu</h2>
+                        <div id="dockerStatusCircle" class="circle status" style="margin-top: 20px;"></div>
+                        <button onclick="DockerStatus()">Docker Durumunu Kontrol Et</button>
+                    </div>
+
+                    <div id="memoryInfo">
+                        <h2>Bellek Kullanımı</h2>
+                        <div id="usedMemory"></div>
+                        <div id="totalMemory"></div>
+                        <div id="usagePercentage"></div>
+                        <div id="memoryStatusCircle" class="circle status" style="margin-top: 20px;"></div>
+                        <button onclick="getMemoryUsage()">Bellek Kullanımını Kontrol Et</button>
+                    </div>
+                    <div id="loadingMessage">Yükleniyor...</div>
+                </div>
+                
+            </div>
+           
+        </div>
+    </div>   
+
+    @section Scripts {
+        <script src="~/js/scripts.js"></script>
+        <script src="~/corona-free-dark-bootstrap-admin-template-1.0.0/samples/template/assets/vendors/js/vendor.bundle.base.js"></script>
+        <script src="~/corona-free-dark-bootstrap-admin-template-1.0.0/samples/template/js/off-canvas.js"></script>
+        <script src="~/corona-free-dark-bootstrap-admin-template-1.0.0/samples/template/js/hoverable-collapse.js"></script>
+        <script src="~/corona-free-dark-bootstrap-admin-template-1.0.0/samples/template/js/misc.js"></script>
+        <script src="~/corona-free-dark-bootstrap-admin-template-1.0.0/samples/template/js/settings.js"></script>
+        <script src="~/corona-free-dark-bootstrap-admin-template-1.0.0/samples/template/js/todolist.js"></script>
+        <script src="path/to/jquery.min.js"></script>
+    }
+    <script>
+        function showVirtualMachineInfo() {
+            var select = document.getElementById("virtualMachineSelect");
+            var selectedVirtualMachine = select.options[select.selectedIndex].value;
+
+            document.getElementById("loadingMessage").innerText = "Veriler alınıyor...";
+            document.getElementById("loadingMessage").style.display = "block";
+
+            // AJAX isteği yaparak sanal makina durumunu kontrol et
+            fetch(`http://localhost:5134/api/SSHWebAPI/${selectedVirtualMachine}`, {
+                method: 'GET',
+                mode: 'cors',
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.text(); // Veriyi text olarak al
+                })
+                .then(data => {
+                    const jsonData = JSON.parse(data);
+
+                    // Geri kalan kodları buraya taşı
+                    console.log(jsonData);
+
+                    document.getElementById("virtualMachineInfo").style.display = "block";
+                    var statusRectangleElement = document.getElementById("statusRectangle");
+                    statusRectangleElement.style.backgroundColor = jsonData.isRunning ? "green" : "red";
+
+                    var virtualMachineNameElement = document.getElementById("virtualMachineName");
+                    virtualMachineNameElement.innerText = "Seçilen Sanal Makina: " + selectedVirtualMachine;
+                    document.getElementById("loadingMessage").style.display = "none";
+                })
+                .catch(error => {
+                    console.error('Hata:', error);
+                    document.getElementById("loadingMessage").style.display = "none";
+                });
+        }
+
+        function DockerStatus() {
+            var select = document.getElementById("virtualMachineSelect");
+            var selectedVirtualMachine = select.options[select.selectedIndex].value;
+
+            document.getElementById("loadingMessage").innerText = "Veriler alınıyor...";
+            document.getElementById("loadingMessage").style.display = "block";
+
+            // AJAX isteği yaparak Docker durumunu kontrol et
+            fetch(`http://localhost:5134/api/SSHWebAPI/docker/${selectedVirtualMachine}`, {
+                method: 'GET',
+                mode: 'cors',
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+
+                    // Durum kutusunu güncelle
+                    var dockerStatusCircleElement = document.getElementById("dockerStatusCircle");
+
+                    // data içinde message adında bir özellik varsa kontrol et
+                    if (data.message && data.message.includes("kurulu")) {
+                        dockerStatusCircleElement.style.backgroundColor = "red";
+                    } else {
+                        dockerStatusCircleElement.style.backgroundColor = "green";
+                    }
+
+                    document.getElementById("loadingMessage").innerText = "";
+                    document.getElementById("loadingMessage").style.display = "none";
+
+                    // Docker Durumu bölümünü göster
+                    document.getElementById("dockerStatusInfo").style.display = "block";
+                })
+                .catch(error => {
+                    console.error('Hata:', error);
+                    document.getElementById("loadingMessage").innerText = "Bir hata oluştu. Docker durumu alınamadı.";
+                    document.getElementById("loadingMessage").style.display = "block";
+
+                    // Docker Durumu bölümünü gizle (hata durumunda)
+                    document.getElementById("dockerStatusInfo").style.display = "none";
+                });
+        }
+
+        function getMemoryUsage() {
+            var select = document.getElementById("virtualMachineSelect");
+            var selectedVirtualMachine = select.options[select.selectedIndex].value;
+
+            document.getElementById("loadingMessage").innerText = "Veriler alınıyor...";
+            document.getElementById("loadingMessage").style.display = "block";
+
+            // AJAX isteği yaparak bellek kullanımını kontrol et
+            fetch(`http://localhost:5134/api/SSHWebAPI/memory/${selectedVirtualMachine}`, {
+                method: 'GET',
+                mode: 'cors',
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+
+                    // Bellek kullanımını güncelle
+                    var usedMemoryElement = document.getElementById("usedMemory");
+                    usedMemoryElement.innerText = "Kullanılan Bellek: " + data.usedMemory + " MB";
+
+                    var totalMemoryElement = document.getElementById("totalMemory");
+                    totalMemoryElement.innerText = "Toplam Bellek: " + data.totalMemory + " MB";
+
+                    var usagePercentageElement = document.getElementById("usagePercentage");
+                    usagePercentageElement.innerText = "Kullanım Yüzdesi: " + data.usagePercentage.toFixed(2) + "%";
+
+                    // Bellek kullanım durumunu güncelle
+                    var memoryStatusCircleElement = document.getElementById("memoryStatusCircle");
+
+                    if (data.status === "Red") {
+                        memoryStatusCircleElement.style.backgroundColor = "red";
+                    } else {
+                        memoryStatusCircleElement.style.backgroundColor = "green";
+                    }
+
+                    document.getElementById("loadingMessage").innerText = "";
+                    document.getElementById("loadingMessage").style.display = "none";
+
+                    // Bellek Kullanımı bölümünü göster
+                    document.getElementById("memoryInfo").style.display = "block";
+                })
+                .catch(error => {
+                    console.error('Hata:', error);
+                    document.getElementById("loadingMessage").innerText = "Bir hata oluştu. Bellek kullanımı alınamadı.";
+                    document.getElementById("loadingMessage").style.display = "block";
+
+                    // Bellek Kullanımı bölümünü gizle (hata durumunda)
+                    document.getElementById("memoryInfo").style.display = "none";
+                });
+        }
+
+
+    
+    </script>
+    
+</body>
+</html>

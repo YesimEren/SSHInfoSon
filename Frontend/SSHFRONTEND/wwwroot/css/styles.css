@@ -1,0 +1,34 @@
+﻿.circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid black;
+    margin: 0 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+#statusRectangle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid black;
+    margin-top: 10px;
+    display: inline-block; /* Dairelerin alt alta değil, yan yana gelmesi için eklenen stil */
+}
+
+#dockerStatusCircle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid black;
+    margin-top: 20px;
+    display: inline-block; /* Dairelerin alt alta değil, yan yana gelmesi için eklenen stil */
+}

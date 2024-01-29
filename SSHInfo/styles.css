@@ -1,0 +1,22 @@
+﻿#virtualMachines {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.virtualMachine {
+    width: 150px;
+    height: 100px;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #000;
+    text-align: center;
+}
+
+.running {
+    background-color: green;
+}
+
+.stopped {
+    background-color: red;
+}
